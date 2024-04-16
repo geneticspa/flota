@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CityResource\Pages;
-use App\Filament\Resources\CityResource\RelationManagers;
-use App\Models\City;
+use App\Filament\Resources\StateResource\Pages;
+use App\Filament\Resources\StateResource\RelationManagers;
+use App\Models\State;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,12 +13,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CityResource extends Resource
+class StateResource extends Resource
 {
-    protected static ?string $model = City::class;
+    protected static ?string $model = State::class;
     protected static ?string $navigationGroup = 'Settings';
-    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
-    protected static ?int $navigationSort = 5 ;
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
+    protected static ?int $navigationSort = 4;
+
 
     public static function form(Form $form): Form
     {
@@ -26,9 +27,6 @@ class CityResource extends Resource
             ->schema([
                 Forms\Components\Select::make('country_id')
                     ->relationship('country', 'name')
-                    ->required(),
-                Forms\Components\Select::make('state_id')
-                    ->relationship('state', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
@@ -47,9 +45,6 @@ class CityResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('country.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('state.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
@@ -98,9 +93,9 @@ class CityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCities::route('/'),
-            'create' => Pages\CreateCity::route('/create'),
-            'edit' => Pages\EditCity::route('/{record}/edit'),
+            'index' => Pages\ListStates::route('/'),
+            'create' => Pages\CreateState::route('/create'),
+            'edit' => Pages\EditState::route('/{record}/edit'),
         ];
     }
 }
